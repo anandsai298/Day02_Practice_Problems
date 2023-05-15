@@ -6,6 +6,8 @@ using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
+using System.IO;
 
 namespace Day02_Practice_Problems
 {
@@ -13,15 +15,15 @@ namespace Day02_Practice_Problems
     {
         public static int Factorial(int num)
         {
-   
-            if (num == 0) 
+
+            if (num == 0)
                 return 1;
             else
-                return num*Factorial(num-1);
+                return num * Factorial(num - 1);
         }
         public void Num_1_100(int n)
         {
-            if(n<=100)
+            if (n <= 100)
             {
                 Console.WriteLine(n);
                 Num_1_100(n + 1);
@@ -30,12 +32,12 @@ namespace Day02_Practice_Problems
         public void Roots_Quadratic_Equation()
         {
             Console.WriteLine("Enter value of a");
-            double a=Convert.ToDouble(Console.ReadLine());
+            double a = Convert.ToDouble(Console.ReadLine());
             Console.WriteLine("Enter value of b");
             double b = Convert.ToDouble(Console.ReadLine());
             Console.WriteLine("Enter value of c");
             double c = Convert.ToDouble(Console.ReadLine());
-            double discriminent = Math.Pow(b,2) - 4 * a * c;
+            double discriminent = Math.Pow(b, 2) - 4 * a * c;
             Console.WriteLine("discriminent" + discriminent);
             double root1, root2;
             if (discriminent > 0)
@@ -55,8 +57,8 @@ namespace Day02_Practice_Problems
         public void Number_String()
         {
             Console.WriteLine("Enter number");
-            int num=Convert.ToInt32(Console.ReadLine());
-           
+            int num = Convert.ToInt32(Console.ReadLine());
+
             if (num % 3 == 0 && num % 5 == 0 && num % 7 == 0)
             {
                 Console.WriteLine("Pling Plang Plong");
@@ -92,29 +94,29 @@ namespace Day02_Practice_Problems
         public void Char_Present_String()
         {
             Console.WriteLine("Enter any string");
-            string s=Console.ReadLine();
+            string s = Console.ReadLine();
             bool has_a = false;
             bool has_e = false;
             bool has_p = false;
             foreach (Char ch in s)
             {
-                if(ch =='a')
+                if (ch == 'a')
                 {
-                    has_a=true;
-                    Console.WriteLine("char a is present"); 
+                    has_a = true;
+                    Console.WriteLine("char a is present");
                 }
-                else if(ch =='e') 
+                else if (ch == 'e')
                 {
                     has_e = true;
                     Console.WriteLine("char e is present");
                 }
-                else if (ch =='p')
+                else if (ch == 'p')
                 {
                     has_p = true;
                     Console.WriteLine("char p is present ");
                 }
             }
-            if(has_a&&has_e && has_p)
+            if (has_a && has_e && has_p)
             {
                 Console.WriteLine("ALL PRESENT");
             }
@@ -129,29 +131,29 @@ namespace Day02_Practice_Problems
         }
         public static float Float_Array_Avg()
         {
-            float[] num = {10.5f,25.5f,45.5f,65.5f };
+            float[] num = { 10.5f, 25.5f, 45.5f, 65.5f };
             float sum = 0;
-            foreach(float f in num)
+            foreach (float f in num)
             {
-                sum+=f;
+                sum += f;
             }
-            float Avg=sum/num.Length;
+            float Avg = sum / num.Length;
             return Avg;
-            
+
         }
         public static int Second_Largest()
         {
             int[] arr = { 2, 9, 1, 4, 6 };
             int larg_Num = 0;
             int Sec_larg = 0;
-            foreach(int  i in arr)
+            foreach (int i in arr)
             {
-                if(i>larg_Num)
+                if (i > larg_Num)
                 {
                     Sec_larg = larg_Num;
-                    larg_Num=i;
+                    larg_Num = i;
                 }
-                else if(i>Sec_larg && i!=larg_Num)
+                else if (i > Sec_larg && i != larg_Num)
                 {
                     Sec_larg = i;
                 }
@@ -184,25 +186,37 @@ namespace Day02_Practice_Problems
         }
         public void Prime_Number_Array()
         {
-            int count = 0;
+            static bool IsPrime(int num)
+            {
+                if (num < 2)
+                {
+                    return false;
+                }
+
+                for (int i = 2; i <= Math.Sqrt(num); i++)
+                {
+                    if (num % i == 0)
+                    {
+                        return false;
+                    }
+                }
+                return true;
+            }
+            Console.WriteLine("Enter the elements of the array ");
             int[] arr = new int[5];
-            Console.WriteLine("Enter 5 values");
+
             for (int i = 0; i < 5; i++)
             {
                 int ele = Convert.ToInt32(Console.ReadLine());
                 arr[i] = ele;
             }
-            foreach (int num in arr)
+            Console.WriteLine("Prime numbers in the array:");
+            for (int i = 0; i < arr.Length; i++)
             {
-                for (int i = 2; i < num; i++)
+                if (IsPrime(arr[i]))
                 {
-                    if (num % i == 0)
-                    {
-                        count++;
-                    }
+                    Console.WriteLine(arr[i]);
                 }
-                if (count > 0)
-                    Console.Write(num + " ");
             }
         }
         public void ShiftZeros()
@@ -220,10 +234,166 @@ namespace Day02_Practice_Problems
             while (count < arr.Length)
             {
                 arr[count] = 0;
+
                 count++;
             }
             foreach (int num in arr)
-                Console.Write(num+"\n");
+                Console.Write(num + "\n");
+        }
+        public void Delete_Array()
+        {
+            int del = 2;
+            int[] arr = new int[5];
+            Console.WriteLine("Original Array:");
+            for (int i = 0; i < 5; i++)
+            {
+                int d = Convert.ToInt32(Console.ReadLine());
+                arr[i] = d;
+            }
+            for (int i = del; i < arr.Length - 1; i++)
+            {
+                arr[i] = arr[i + 1];
+            }
+            Console.WriteLine("\nArray after deleting element at index 2:", del);
+            for (int i = 0; i < arr.Length; i++)
+            {
+                Console.Write(arr[i] + " ");
+            }
+        }
+        public void Days_Into_Y_M_W()
+        {
+            Console.Write("Enter the number of days: ");
+            int totalDays = Convert.ToInt32(Console.ReadLine());
+
+            int years = totalDays / 365;
+            int remainingDays = totalDays % 365;
+            int months = remainingDays / 30;
+            remainingDays = remainingDays % 30;
+            int weeks = remainingDays / 7;
+            remainingDays = remainingDays % 7;
+
+            Console.WriteLine("Years:" + years + "\n" + "Months:" + months + "\n" + "Weeks:" + weeks + "\n" + "Days:" + remainingDays);
+        }
+        public void SquareRoot()
+        {
+            Console.WriteLine("Enter number to find square root");
+            double num = Convert.ToInt32(Console.ReadLine());
+            double res = Math.Pow((num), 0.5);
+            Console.WriteLine("the saqure root of " + num + "is -->" + res);
+        }
+        public  void PrimeNumbers(int min,int Max)
+        {
+            int Count = 0;
+            for (int i = min; i <(Max); i++)
+            {
+                bool IsPrime=true;
+                for (int j=min;j<=Math.Sqrt(i);j++)
+                {
+                    if (i % j == 0)
+                    {
+                        IsPrime = false;
+                        break;
+                    }
+                }
+                if (IsPrime)
+                {
+                    Count++;
+                    Console.WriteLine(i + " ");
+                }
+            }
+            Console.WriteLine("count of prime numbers" + Count);
+        }
+        public void Celsius_Kelvin_FahrenHeit()
+        {
+            Console.Write("Enter the temperature in Celsius: ");
+            double celsius = Convert.ToDouble(Console.ReadLine());
+
+            double Kelvin = celsius + 273.15;
+            double Fahrenheit = celsius * 1.8 + 32;
+
+            Console.WriteLine("Temperature in Kelvin: "+ Kelvin);
+            Console.WriteLine("Temperature in Fahrenheit:"+ Fahrenheit);
+        }
+        public void Sum_Array_Elements()
+        {
+            int sum = 0;
+            Console.WriteLine("Enter elements in an array");
+            int[] arr = {1,2,3,4,5,6,7,8,9};
+            foreach(int i in arr)
+            {
+                sum += i;
+            }
+            Console.WriteLine("Sum of the elements in array is -->" + sum);
+        }
+        public void Ht_Dwarf_Tall_Avg()
+        {
+            Console.WriteLine("Enter height value");
+            double Ht = Convert.ToDouble(Console.ReadLine());
+            if(Ht<150)
+            {
+                Console.WriteLine("Dwarf Ht");
+            }
+            else if (Ht > 150 && Ht<160)
+            {
+                Console.WriteLine("AVERAGE Ht");
+            }
+            else if (Ht > 160)
+            {
+                Console.WriteLine("TALL Ht");
+            }
+            else
+            {
+                Console.WriteLine("Invalid Height Input");
+            }
+        }
+        public void FilePath()
+        {
+            string filePath = "c:/csharp/ex/test.txt";
+            FileInfo file = new FileInfo(filePath);
+            if(!file.Directory.Exists)
+            {
+                Directory.CreateDirectory(file.Directory.FullName);
+                using (StreamWriter writer = new StreamWriter(filePath))
+                {
+                    writer.WriteLine("ANAND SAI KUMAR VIJAYAROWTHU");
+                }
+            }
+            else if (file.Exists)
+            {
+                using (StreamReader reader = new StreamReader(filePath))
+                {
+                    string data = reader.ReadToEnd();
+                    Console.WriteLine("File exists and read Data from the file:");
+                    Console.WriteLine(data);
+                }
+            }
+        }
+        public void Check_Operators()
+        {
+            Console.WriteLine("Enter Character Value");
+            char ch= Convert.ToChar(Console.ReadLine());
+            switch(ch)
+            {
+                case '+':
+                case '-':
+                case '*':
+                    Console.WriteLine("Arthematic operator");
+                    break;
+                case '&':
+                case '|':
+                
+                    Console.WriteLine("Logical operator");
+                    break;
+                case '=':
+                case '>':
+                case '<':
+                    Console.WriteLine("Relational operator");
+                    break;
+
+            }
         }
     }
 }
+
+
+
